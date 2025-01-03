@@ -1,0 +1,126 @@
+
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap");
+
+body {
+    font-family: "Poppins", sans-serif;
+    background-color: #ffffff;
+    display: flex;
+    font-weight:100px;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.login-box {
+    width: 400px;
+    max-width: 90%;
+    padding: 40px;
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+    text-align:left;
+}
+
+h2 {
+    margin-bottom: -0.9px;
+    font-weight:700;
+    font-size: 25px;
+    color: rgb(0, 0, 0);
+}
+
+h4 {
+    display: flex;
+    font-weight:700;
+    margin-bottom: 20px;
+    font-size: 22px;
+    color: rgba(12, 12, 12, 0.2);
+}
+
+.login-box h3 {
+    margin-bottom: 10px;
+    color: rgb(0, 0, 0);
+    text-align: left;
+    font-size: 14px;
+}
+
+.userN-input {
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.userN-input input {
+    width: 100%;
+    border-radius: 10px;
+    outline: none;
+    border: 1px solid #a9a9a9;
+    padding: 10px;
+    font-size: 14px;
+    color: #000000;
+    background: transparent;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.userN-input input:hover, 
+.userN-input input:focus {
+    transform: scale(1.02);
+    border-color: #dadada;
+}
+
+.userN-input input::placeholder {
+    color: gray;
+}
+
+.keep-loggedin {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    color: #a9a9a9;
+    font-size: 14px;
+}
+
+.keep-loggedin input {
+    margin-right: 10px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    border-radius: 25px;
+    background: #000000;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background-color: rgb(59, 59, 59);
+    
+}
+
+.help {
+    margin-top: 15px;
+    color: #000000;
+    font-size: 14px;
+    text-align: center;
+}
+
+.help a {
+    color: #000000;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.help a:hover {
+    text-decoration: underline;
+}
