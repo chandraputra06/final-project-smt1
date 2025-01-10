@@ -1,81 +1,170 @@
 $(document).ready(function () {
     // Inisialisasi kalender
-    const savedEvents = JSON.parse(localStorage.getItem('calendarEvents')) || []; // Ambil data dari local storage
+    const savedEvents = JSON.parse(localStorage.getItem('calendarEvents')) || [];
+    
+    // Inisialisasi kalender dengan event yang tersimpan
     $('#calendar').evoCalendar({
         theme: 'Royal Navy',
         language: 'en',
-        calendarEvents: savedEvents // Masukkan event yang sudah tersimpan
+        calendarEvents: savedEvents
     });
 
     // Render daftar kegiatan dari Local Storage
-    savedEvents.forEach(event => {
-        addEventToList(event);
-    });
+    // Pindahkan renderEventList ke luar dari ready function
+    renderEventList();
 
     // Tangani event submit pada form
     $('#eventForm').on('submit', function (e) {
-        e.preventDefault(); // Cegah reload halaman
+        e.preventDefault();
 
-        // Ambil data dari form
         const nama = $('#nama').val();
         const tanggal = $('#tanggal').val();
         const deskripsi = $('#deskripsi').val();
         const kepentingan = $('#kepentingan').val();
 
-        // Validasi data
         if (!nama || !tanggal || !kepentingan) {
             alert('Semua data wajib diisi!');
             return;
         }
 
-        // Tentukan warna berdasarkan kepentingan
-        const color = kepentingan === 'important' ? '#ff0000' : '#63d867'; // Merah untuk sangat penting, hijau untuk tidak penting
-
-        // Buat ID unik untuk event
+        const color = kepentingan === 'important' ? '#ff0000' : '#63d867';
         const eventId = `event_${Date.now()}`;
 
-        // Buat event baru
         const newEvent = {
-            id: eventId, // ID unik
+            id: eventId,
             name: nama,
             date: tanggal,
             description: deskripsi,
             type: 'event',
-            color: color // Warna berdasarkan kepentingan
+            color: color
         };
 
         // Tambahkan event ke kalender
         $('#calendar').evoCalendar('addCalendarEvent', newEvent);
 
+        // Tambahkan ke Local Storage
+        const currentEvents = JSON.parse(localStorage.getItem('calendarEvents')) || [];
+        currentEvents.push(newEvent);
+        localStorage.setItem('calendarEvents', JSON.stringify(currentEvents));
+
         // Tambahkan ke daftar kegiatan
         addEventToList(newEvent);
 
-        // Simpan event ke Local Storage
-        savedEvents.push(newEvent);
-        localStorage.setItem('calendarEvents', JSON.stringify(savedEvents));
-
-        // Reset form
         $('#eventForm')[0].reset();
-
-        // Tampilkan notifikasi
         alert('Kegiatan berhasil ditambahkan ke kalender!');
     });
 });
 
+// Fungsi untuk merender daftar kegiatan dari Local Storage
+function renderEventList() {
+    const events = JSON.parse(localStorage.getItem('calendarEvents')) || [];
+    $('#eventList').empty();
+    events.forEach(event => {
+        addEventToList(event);
+    });
+}
+
 // Fungsi untuk menambahkan kegiatan ke daftar
 function addEventToList(event) {
     $('#eventList').append(`
-        <div id="list_${event.id}" style="margin-bottom: 10px;">
-            <strong>${event.name}</strong> (${event.date})<br/>
-            ${event.description}<br/>
-            <span style="color: ${event.color}; font-weight: bold;">
-                ${event.color === '#ff0000' ? 'Sangat Penting' : 'Tidak Penting'}
-            </span><br/>
-            <button onclick="removeEvent('${event.id}')" style="background-color: red; color: white; padding: 5px 10px; border: none; cursor: pointer;">
-                Hapus
-            </button>
+        <div id="list_${event.id}" class="event-item">
+            <div class="event-header">
+                <span class="event-name-container">
+                    <span class="event-name">${event.name}</span>
+                </span>
+                <span class="event-date">${event.date}</span>
+            </div>
+            <p class="event-description">${event.description}</p>
+            <div class="event-footer">
+                <span class="priority-tag" style="background-color: ${event.color}">
+                    ${event.color === '#ff0000' ? 'Sangat Penting' : 'Tidak Penting'}
+                </span>
+                <button onclick="removeEvent('${event.id}')" class="delete-btn">
+                    Hapus
+                </button>
+            </div>
         </div>
     `);
+ 
+
+    // Menambahkan styles menggunakan jQuery
+    $('<style>')
+        .prop('type', 'text/css')
+        .html(`
+            .event-item {
+                background: #115e59;
+                border-radius: 8px;
+                padding: 15px;
+                margin-bottom: 15px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                transition: transform 0.2s ease;
+            }
+
+            .event-item:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            }
+
+            .event-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 8px;
+            }
+
+            .event-name-container {
+               background: #042f2e;
+               padding: 5px 10px;
+               border-radius: 4px;
+               display: inline-block;
+           }
+
+            .event-name {
+                font-size: 1.1em;
+                font-weight: bold;
+                color: #fff;
+            }
+
+            .event-date {
+                color: #fff;
+                font-size: 0.9em;
+            }
+
+            .event-description {
+                color: #fff;
+                margin: 8px 0;
+                line-height: 1.4;
+            }
+
+            .event-footer {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-top: 10px;
+            }
+
+            .priority-tag {
+                padding: 4px 8px;
+                border-radius: 4px;
+                color: white;
+                font-size: 0.9em;
+            }
+
+            .delete-btn {
+                background-color: #ff4444;
+                color: white;
+                border: none;
+                padding: 6px 12px;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: background-color 0.2s ease;
+            }
+
+            .delete-btn:hover {
+                background-color: #ff0000;
+            }
+        `)
+        .appendTo('head');
 }
 
 // Fungsi untuk menghapus event
@@ -83,13 +172,13 @@ function removeEvent(eventId) {
     // Hapus event dari kalender
     $('#calendar').evoCalendar('removeCalendarEvent', eventId);
 
-    // Hapus dari daftar kegiatan
-    $(`#list_${eventId}`).remove();
-
     // Hapus dari Local Storage
     const savedEvents = JSON.parse(localStorage.getItem('calendarEvents')) || [];
     const updatedEvents = savedEvents.filter(event => event.id !== eventId);
     localStorage.setItem('calendarEvents', JSON.stringify(updatedEvents));
+
+    // Hapus dari daftar kegiatan
+    $(`#list_${eventId}`).remove();
 
     alert('Kegiatan berhasil dihapus!');
 }

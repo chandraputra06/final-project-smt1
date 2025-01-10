@@ -1,13 +1,14 @@
 <?php
 include __DIR__ . '/../service/database.php';
 
-$error_message = ""; // Variabel untuk pesan error
+session_start();
+
+$error_message = "";
 
 if (isset($_POST['login'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // Menggunakan Prepared Statements untuk keamanan
     $sql = "SELECT * FROM user WHERE nama = ? AND password = ?";
     $stmt = $db->prepare($sql);
     $stmt->bind_param("ss", $username, $password);
@@ -15,12 +16,10 @@ if (isset($_POST['login'])) {
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        // Jika login berhasil
         $data = $result->fetch_assoc();
-        header("location: schedule.html"); // Redirect ke halaman dashboard
+        header("location: schedule.html"); 
         exit();
     } else {
-        // Jika login gagal
         $error_message = "Nama atau Password salah.";
     }
 

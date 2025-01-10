@@ -30,19 +30,3 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       });
     });
   });
-
-// Carousel Feature
- // Optional: Adjust animation duration based on container size
- document.addEventListener("DOMContentLoaded", () => {
-    const slides = document.querySelector(".carousel-track");
-    const slideCount = slides.children.length;
-    const slideWidth = slides.children[0].offsetWidth;
-
-    // Calculate animation duration for smooth scrolling
-    const totalWidth = slideWidth * slideCount;
-    const animationDuration = (totalWidth / 100) * 1; // Adjust speed factor
-
-    slides.style.animationDuration = `${animationDuration}s`;
-});
-
-  
