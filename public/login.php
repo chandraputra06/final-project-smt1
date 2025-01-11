@@ -59,7 +59,7 @@ if (isset($_POST['login'])) {
                     Don't Have Any Account?
                     <a href="register.php">Register</a>
                 </div>
-                <p style="color: red;"><?= htmlspecialchars($error_message) ?></p>
+                <p style="color: red; text-align: center;"><?= htmlspecialchars($error_message) ?></p>
         </form>
     </div>
 </body>
