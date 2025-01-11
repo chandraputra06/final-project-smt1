@@ -65,19 +65,6 @@ body {
     left: calc(67% + 200px);
 }
 
-.carousel .list .item:nth-child(5){
-    left: calc(67% + 400px);
-}
-
-.carousel .list .item:nth-child(6){
-    left: calc(67% + 600px);
-}
-
-.carousel .list .item:nth-child(n+7){
-    left: calc(67% + 800px);
-    opacity: 0;
-}
-
 .item .content {
     position: absolute;
     color: white;
