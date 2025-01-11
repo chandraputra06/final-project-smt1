@@ -1,19 +1,15 @@
 $(document).ready(function () {
-    // Inisialisasi kalender
     const savedEvents = JSON.parse(localStorage.getItem('calendarEvents')) || [];
     
-    // Inisialisasi kalender dengan event yang tersimpan
     $('#calendar').evoCalendar({
         theme: 'Royal Navy',
         language: 'en',
         calendarEvents: savedEvents
     });
 
-    // Render daftar kegiatan dari Local Storage
-    // Pindahkan renderEventList ke luar dari ready function
+
     renderEventList();
 
-    // Tangani event submit pada form
     $('#eventForm').on('submit', function (e) {
         e.preventDefault();
 
@@ -39,15 +35,12 @@ $(document).ready(function () {
             color: color
         };
 
-        // Tambahkan event ke kalender
         $('#calendar').evoCalendar('addCalendarEvent', newEvent);
 
-        // Tambahkan ke Local Storage
         const currentEvents = JSON.parse(localStorage.getItem('calendarEvents')) || [];
         currentEvents.push(newEvent);
         localStorage.setItem('calendarEvents', JSON.stringify(currentEvents));
 
-        // Tambahkan ke daftar kegiatan
         addEventToList(newEvent);
 
         $('#eventForm')[0].reset();
@@ -55,7 +48,6 @@ $(document).ready(function () {
     });
 });
 
-// Fungsi untuk merender daftar kegiatan dari Local Storage
 function renderEventList() {
     const events = JSON.parse(localStorage.getItem('calendarEvents')) || [];
     $('#eventList').empty();
@@ -64,7 +56,7 @@ function renderEventList() {
     });
 }
 
-// Fungsi untuk menambahkan kegiatan ke daftar
+
 function addEventToList(event) {
     $('#eventList').append(`
         <div id="list_${event.id}" class="event-item">
@@ -86,8 +78,6 @@ function addEventToList(event) {
         </div>
     `);
  
-
-    // Menambahkan styles menggunakan jQuery
     $('<style>')
         .prop('type', 'text/css')
         .html(`
@@ -167,17 +157,14 @@ function addEventToList(event) {
         .appendTo('head');
 }
 
-// Fungsi untuk menghapus event
+
 function removeEvent(eventId) {
-    // Hapus event dari kalender
     $('#calendar').evoCalendar('removeCalendarEvent', eventId);
 
-    // Hapus dari Local Storage
     const savedEvents = JSON.parse(localStorage.getItem('calendarEvents')) || [];
     const updatedEvents = savedEvents.filter(event => event.id !== eventId);
     localStorage.setItem('calendarEvents', JSON.stringify(updatedEvents));
 
-    // Hapus dari daftar kegiatan
     $(`#list_${eventId}`).remove();
 
     alert('Kegiatan berhasil dihapus!');

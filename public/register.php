@@ -52,7 +52,6 @@ if (isset($_POST["register"])) {
             <br>              
             <button type="submit" name="register" class="text-base font-semibold text-white bg-teal-900 py-3 px-8 rounded-full hover:shadow-lg hover:opacity-80 transition duration-300 ease-in-out">Register</button> 
             <br>
-            <!-- Menampilkan pesan feedback -->
             <p style="color: red;"><?= htmlspecialchars($register_message) ?></p>
         </form>
     </div>
