@@ -35,11 +35,12 @@ if (isset($_POST["register"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <link rel="stylesheet" href="css/stylelogin.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
-    <div class="register-box">
+<body class="bg-gray-100">
+    <div class="login-box bg-gray-100">
         <form action="" method="POST">
-            <h2>Register Here</h2>
+            <h2 class="text-3xl font-semibold">Register Here</h2>
             <h3>Nama</h3>
             <div class="userN-input">
                 <input type="text" placeholder="username" name="username" required />
@@ -49,7 +50,7 @@ if (isset($_POST["register"])) {
                 <input type="password" placeholder="password" name="password" required />
             </div>
             <br>              
-            <button type="submit" name="register">Register</button> 
+            <button type="submit" name="register" class="text-base font-semibold text-white bg-teal-900 py-3 px-8 rounded-full hover:shadow-lg hover:opacity-80 transition duration-300 ease-in-out">Register</button> 
             <br>
             <!-- Menampilkan pesan feedback -->
             <p style="color: red;"><?= htmlspecialchars($register_message) ?></p>
