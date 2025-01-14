@@ -18,11 +18,6 @@ $(document).ready(function () {
         const deskripsi = $('#deskripsi').val();
         const kepentingan = $('#kepentingan').val();
 
-        if (!nama || !tanggal || !kepentingan) {
-            alert('Semua data wajib diisi!');
-            return;
-        }
-
         const color = kepentingan === 'important' ? '#ff0000' : '#63d867';
         const eventId = `event_${Date.now()}`;
 
